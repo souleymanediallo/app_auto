@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from .models import Team
+from cars.models import Car
 
 
 # Create your views here.
 def home(request):
-    return render(request, "pages/index.html")
+    cars_featured = Car.objects.all()
+    cars_latest = Car.objects.order_by('-created_date')
+    context = {'cars_featured': cars_featured, 'cars_latest': cars_latest}
+    return render(request, "pages/index.html", context)
 
 
 def about(request):
